@@ -1,15 +1,13 @@
 #!/bin/bash
 echo "==> Welcome to Snake and Ladder Game <<=="
-    initialPosition=0
-    currentPosition=0
+     initialPosition=0
+     currentPosition=0
      NoPlay=0
      Ladder=1
      Snake=2
      winnigPosition=100
 
-
     function randomValue(){
-
         getValue=$((RANDOM%6+1))
         echo "Dice the Number:" $getValue
     }
@@ -17,36 +15,39 @@ echo "==> Welcome to Snake and Ladder Game <<=="
 
     function Check_NoPlay_Ladder_Snake(){
 
-	        position=$((RANDOM%3))
-
-	case $position in
+        position=$((RANDOM%3))
+        case $position in
         $NoPlay)
-	         echo "For No Play=" $position
-        	 currentPosition=$currentPosition
+             echo "For No Play=" $position
+            currentPosition=$currentPosition
         ;;
 
         $Ladder)
-            	echo "For Ladder=" $position
-            	currentPosition=$(($currentPosition + $getValue))
+            echo "For Ladder=" $position
+            currentPosition=$(($currentPosition + $getValue))
         ;;
 
         $Snake)
-            	echo "For Snake=" $position
-            	currentPosition=$(($currentPosition - $getValue))
-
-		if [ $currentPosition -lt 0 ]
-        	then
+        	echo "For Snake=" $position
+	        currentPosition=$(($currentPosition - $getValue))
+            	    if [ $currentPosition -lt 0 ]
+            	    then
                 	currentPosition=0
-        	fi
+           	    fi
         ;;
         esac
-        	echo "Current Position=" $currentPosition
+             echo "Current Position=" $currentPosition
     }
     Check_NoPlay_Ladder_Snake
 
-    while [ $currentPosition -lt $winnigPosition ]
-    do
-	        randomValue
-        	Check_NoPlay_Ladder_Snake
-    
+	while [ $currentPosition -lt $winnigPosition ]
+        do
+         randomValue
+         Check_NoPlay_Ladder_Snake
+
+	if [ $currentPosition -gt $winnigPosition ]
+        then
+            currentPosition=$(( $currentPosition - $getValue ))
+            echo " Current Position="$currentPosition
+        fi
     done
